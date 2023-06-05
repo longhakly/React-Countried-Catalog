@@ -1,6 +1,6 @@
 import React from 'react';
-import KhFlag from '../assets/kh.png';
 import { useEffect, useState } from 'react';
+
 const CatalogsCardDetail: React.FC<{ countryDetail: any }> = ({ countryDetail }) => {
   console.log("country detail", countryDetail);
   const [native_name, setNativeName] = useState("");
@@ -13,7 +13,7 @@ const CatalogsCardDetail: React.FC<{ countryDetail: any }> = ({ countryDetail })
         } else {
         // If no Native common name then give as offical name
         setNativeName(countryDetail[0].name.official);
-    }
+        }
     }
 
   }, [countryDetail]);

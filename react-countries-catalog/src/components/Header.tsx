@@ -18,9 +18,9 @@ const Header: React.FC<HeaderProps> = ({ onSearchResults }) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle no searchInput
-    // if(searchInput===''){
-    //     return false;
-    // }
+    if(searchInput===''){
+        return false;
+    }
     // Fetch Data by Search
     try {
         const response = await getSearchCountriesAPI(searchInput);
@@ -38,11 +38,11 @@ const Header: React.FC<HeaderProps> = ({ onSearchResults }) => {
   return (
     <div className='flex w-full h-[100px]'>
       {/* Left Header */}
-      <div className='w-[35%] pl-4'>
-        <img src={Logo} className='w-[80px] h-[80px]' />
+      <div className='pl-4 2xl:w-[35%] lg:w-[30%] md:w-[25%] sm:w-[20%] xs:w-[15%]'>
+        <img src={Logo} className='w-[80px]' />
       </div>
       {/* Middle Header */}
-      <div className='w-[30%] block'>
+      <div className=' block 2xl:w-[30%] lg:w-[40%] md:w-[50%] sm:w-[60%] xs:w-[70%]'>
         {/* Search Bar */}
         <form onSubmit={handleSubmit}>
           <div className='w-full h-[45px] mt-10 flex items-center justify-center border border-gray-300 rounded-[10px] shadow-md'>
@@ -55,15 +55,15 @@ const Header: React.FC<HeaderProps> = ({ onSearchResults }) => {
             />
             <button
               type='submit'
-              className='w-[10%] rounded-lg py-2 px-4 hover:bg-green-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-green-500'
+              className=' rounded-lg py-2 px-4 hover:bg-green-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-green-500 2xl:w-[10%] lg:w-[10%] md:w-[10%] sm: w-[10%] xs:w-[20%]'
             >
-              <SearchIcon />
+              <SearchIcon className='w-[24px] h-[24px]'/>
             </button>
           </div>
         </form>
       </div>
       {/* Right Header */}
-      <div className='w-[35%]'></div>
+      <div className='2xl:w-[35%] lg:w-[30%] md:w-[25%] sm:w-[20%] xs:w-[15%]'></div>
     </div>
   );
 };

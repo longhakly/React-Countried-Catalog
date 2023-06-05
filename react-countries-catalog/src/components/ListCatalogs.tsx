@@ -16,11 +16,15 @@ interface Country {
 
 const ListCatalogs: React.FC<ListCatalogsProps> = ({ searchResults }) => {
 
+  // Assign to state for purpose update state recall all countris data in handleSortAll
   const [searchResultsAdjust, setSearchResultsAdjust] = useState(searchResults);
-  // Pop Up
+  useEffect(() => {
+    setSearchResultsAdjust(searchResults);
+  }, [searchResults]);
+
+  // Pop Up and fetch all country detail data
   const [isOpen, setIsOpen] = useState(false);
   const [countryDetail, setCountryDetail] = useState("");
-
   const togglePopup = async (officialName: string) => {
     setIsOpen(!isOpen);
     if(officialName != "None"){
@@ -46,6 +50,7 @@ const ListCatalogs: React.FC<ListCatalogsProps> = ({ searchResults }) => {
       if (searchResultsAdjust.length > 0) {
         setAllCountries(searchResultsAdjust);
         handlePageChange(1);
+        setSortOrder(null);
       } else {
         try {
           const response = await getAllCountriesAPI();
@@ -90,10 +95,6 @@ const ListCatalogs: React.FC<ListCatalogsProps> = ({ searchResults }) => {
     setSortOrder('desc');
   };
 
-  useEffect(() => {
-    setSearchResultsAdjust(searchResults);
-  }, [searchResults]);
-
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
@@ -114,7 +115,9 @@ const ListCatalogs: React.FC<ListCatalogsProps> = ({ searchResults }) => {
       <div className='flex items-center justify-start space-x-2 mt-2'>
       <button
           id='all'
-          className="text-[#8E8E8E] hover:text-white hover:bg-green-500 px-2 rounded-[10px]"
+          className={`${
+            sortOrder === 'all' ? 'bg-green-500 text-white' : 'text-[#8E8E8E]'
+          } hover:text-white hover:bg-green-500 px-2 rounded-[10px] `}
           onClick={handleSortAll}
         >
           All
@@ -140,14 +143,14 @@ const ListCatalogs: React.FC<ListCatalogsProps> = ({ searchResults }) => {
           Z-A
         </button>
       </div>
-      {/* List of Catalog */}
+      {/* Popup Catalog Detail*/}
       {isOpen && (
         <div className='absolute z-10 inset-0 flex items-center justify-center'>
           <div
             className='absolute z-0 w-full h-full flex justify-center items-center bg-gray-500 opacity-50'
             onClick={()=>togglePopup("None")}
           ></div>
-          <div className='absolute z-20 w-[700px] z'>
+          <div className='absolute z-20 2xl:w-[700px] lg:w-[700px] md:w-[500px] sm:w-[450px] xs:w-[450px]'>
             <CatalogsCardDetail countryDetail={countryDetail}/>
           </div>
         </div>
@@ -155,14 +158,15 @@ const ListCatalogs: React.FC<ListCatalogsProps> = ({ searchResults }) => {
       {/* Map List of CatalogsCard from fetch data*/}
       <div className='w-full h-[550px] flex flex-wrap justify-left overflow-x-auto mt-4 overflow-y-scroll'>
         {displayedCountries.map((country, index) => (
-          <div className='w-[20%]' onClick={()=>togglePopup(country.name.official)} key={index}>
+          <div className='2xl:w-[20%] lg:w-[25%] md:w-[33.33%] sm:w-[50%] xs:w-[100%]' onClick={()=>togglePopup(country.name.official)} key={index}>
             <CatalogsCard country={country} />
           </div>
         ))}
       </div>
 
-      <nav className='flex justify-end mt-4'>
-        <ul className='flex items-center space-x-2'>
+      {/* Pagination */}
+      <nav className='flex mt-4 2xl:justify-end md:justify-end sm:justify-end xs:justify-center'>
+        <ul className='flex items-center space-x-2 xs:space-x-1'>
           {Array.from({ length: Math.ceil(allCountries.length / itemsPerPage) }).map((_, index) => (
             <li key={index}>
               <a
