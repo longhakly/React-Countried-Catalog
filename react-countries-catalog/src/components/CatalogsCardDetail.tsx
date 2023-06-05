@@ -2,12 +2,11 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 
 const CatalogsCardDetail: React.FC<{ countryDetail: any }> = ({ countryDetail }) => {
-  console.log("country detail", countryDetail);
+  // Handle native common name undefined
   const [native_name, setNativeName] = useState("");
   useEffect(() => {
     if(countryDetail){
         const firstNativeNameKey = Object.keys(countryDetail[0].name.nativeName)[0];
-        // Handle native common name undefined
         if (countryDetail[0].name.nativeName[firstNativeNameKey] && countryDetail[0].name.nativeName[firstNativeNameKey].common) {
         setNativeName(countryDetail[0].name.nativeName[firstNativeNameKey].common);
         } else {
@@ -74,9 +73,13 @@ const CatalogsCardDetail: React.FC<{ countryDetail: any }> = ({ countryDetail })
               <div className='bg-[#868686] px-3 py-0.5 rounded-[10px]'>
                 <p className='text-white text-[14px]'>{countryDetail[0].ccn3}</p>
               </div>
-              <div className='bg-[#868686] px-3 py-0.5 rounded-[10px]'>
-                <p className='text-white text-[14px]'>{countryDetail[0].cioc}</p>
-              </div>
+              {
+                countryDetail[0].cioc?(              
+                  <div className='bg-[#868686] px-3 py-0.5 rounded-[10px]'>
+                    <p className='text-white text-[14px]'>{countryDetail[0].cioc}</p>
+                  </div>
+                ):null
+              }
             </div>
             <div className='flex justify-start items-center my-1 space-x-4'>
               <h3>Area :</h3>

@@ -26,13 +26,12 @@ const ListCatalogs: React.FC<ListCatalogsProps> = ({ searchResults }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [countryDetail, setCountryDetail] = useState("");
   const togglePopup = async (officialName: string) => {
-    setIsOpen(!isOpen);
     if(officialName != "None"){
       try {
         const response = await getCountryDetailAPI(officialName);
         if (response && response.status === 200) {
           setCountryDetail(response.data);
-          console.log(response.data);
+          setIsOpen(!isOpen);
         } else {
           console.log('Error fetching data');
         }
@@ -40,6 +39,7 @@ const ListCatalogs: React.FC<ListCatalogsProps> = ({ searchResults }) => {
         console.log('Error fetching data', error);
       }
     }
+    setIsOpen(!isOpen);
 
   };
 
@@ -111,7 +111,7 @@ const ListCatalogs: React.FC<ListCatalogsProps> = ({ searchResults }) => {
     <div className='block w-ful mx-[10%] mt-[50px]'>
       {/* Title */}
       <h1 className='text-[20px] font-[500]'>Countries Catalog</h1>
-      {/* Filter Asc, Desc */}
+      {/* Filter All, Asc, Desc */}
       <div className='flex items-center justify-start space-x-2 mt-2'>
       <button
           id='all'
