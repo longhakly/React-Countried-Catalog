@@ -1,11 +1,14 @@
 {
+  "homepage": "https://longhakly.github.io/React-Countried-Catalog",
   "name": "react-countries-catalog",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "start": "vite",
+    "deploy": "gh-pages -d dist",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -16,6 +19,7 @@
     "@types/axios": "^0.14.0",
     "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",
+    "gh-pages": "^5.0.0",
     "postcss": "^8.4.24",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
